@@ -49,4 +49,3 @@ docker compose up -d --build       # update to latest Paperclip/CLIs
 
 ## Backup / move to a VPS
 Copy this folder including `paperclip-data/` and `.env`. Never regenerate the secrets.
-# paperClip

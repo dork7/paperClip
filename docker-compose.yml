@@ -1,0 +1,26 @@
+services:
+  paperclip:
+    build: .
+    image: paperclip-local
+    container_name: paperclip
+    restart: unless-stopped
+
+    # Reachable from other devices on your network (login required)
+    ports:
+      - "3100:3100"
+
+    env_file: .env
+    environment:
+      PAPERCLIP_PUBLIC_URL: ${PAPERCLIP_PUBLIC_URL}
+
+    volumes:
+      # Paperclip data: database, agent workspaces, Codex login (/paperclip/.codex)
+      - ./paperclip-data:/paperclip
+      # Your folders – the ONLY parts of your laptop agents can touch
+      - ${OBSIDIAN_DIR}:/projects/obsidian_notes
+      - ${REPOS_DIR}:/projects/repos
+      - ${MISC_DIR}:/projects/misc
+
+    # Calculated by setup.sh: 40% of CPU cores, 20% of system memory
+    cpus: ${PAPERCLIP_CPUS}
+    mem_limit: ${PAPERCLIP_MEM}
